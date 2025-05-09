@@ -52,12 +52,12 @@ const TablaVentas = ({ ventas, cargando, error, obtenerDetalles, abrirModalElimi
           </Button>
 
           <Button
-            variant="outline-danger"
+            variant="outline-warning"
             size="sm"
             className="me-2"
             onClick={() => abrirModalActualizacion(venta)}
           >
-            <i className="bi bi-trash"></i>
+            <i className="bi bi-pencil"></i>
           </Button>
         </td>
           </tr>
