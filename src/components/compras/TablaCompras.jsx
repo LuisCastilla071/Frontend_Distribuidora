@@ -1,16 +1,13 @@
+//TablaCompras.jsx
+
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const TablaCompras = ({ compras, cargando, error, obtenerDetalles, abrirModalEliminacion }) => {
-  if (cargando) {
-    return <div>Cargando compras...</div>; // Muestra mensaje mientras carga
-  }
-  if (error) {
-    return <div>Error: {error}</div>; // Muestra error si ocurre
-  }
+const TablaCompras = ({ compras, cargando, error, obtenerDetalles, abrirModalEliminacion, abrirModalActualizacion }) => {
+  if (cargando) return <div>Cargando compras...</div>;
+  if (error) return <div>Error: {error}</div>;
 
-  // Renderizado de la tabla con los datos recibidos
   return (
     <Table striped bordered hover responsive>
       <thead>
@@ -28,7 +25,7 @@ const TablaCompras = ({ compras, cargando, error, obtenerDetalles, abrirModalEli
             <td>{compra.id_compra}</td>
             <td>{compra.fecha_compra}</td>
             <td>{compra.nombre_empleado}</td>
-            <td>C$ {compra.total_compra.toFixed(2)}</td>
+            <td>C$ {compra.total_compra}</td>
             <td>
               <Button
                 variant="outline-success"
@@ -37,6 +34,14 @@ const TablaCompras = ({ compras, cargando, error, obtenerDetalles, abrirModalEli
                 onClick={() => obtenerDetalles(compra.id_compra)}
               >
                 <i className="bi bi-list-ul"></i>
+              </Button>
+              <Button
+                variant="outline-warning"
+                size="sm"
+                className="me-2"
+                onClick={() => abrirModalActualizacion(compra)}
+              >
+                <i className="bi bi-pencil"></i>
               </Button>
               <Button
                 variant="outline-danger"
@@ -53,5 +58,4 @@ const TablaCompras = ({ compras, cargando, error, obtenerDetalles, abrirModalEli
   );
 };
 
-// Exportación del componente
 export default TablaCompras;

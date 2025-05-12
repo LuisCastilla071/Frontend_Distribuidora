@@ -1,11 +1,9 @@
-import React from "react";
-import { Modal, Button } from "react-bootstrap";
+//ModalEliminacionCompra.jsx
 
-const ModalEliminacionCompra = ({
-  mostrarModalEliminacion,
-  setMostrarModalEliminacion,
-  eliminarCompra,
-}) => {
+import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
+
+const ModalEliminacionCompra = ({ mostrarModalEliminacion, setMostrarModalEliminacion, eliminarCompra }) => {
   return (
     <Modal show={mostrarModalEliminacion} onHide={() => setMostrarModalEliminacion(false)}>
       <Modal.Header closeButton>
