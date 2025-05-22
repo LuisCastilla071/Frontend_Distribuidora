@@ -12,7 +12,10 @@ import Compras from "./views/Compras";
 import Usuarios from "./views/Usuarios";
 import Empleados from "./views/Empleados";
 import Catalogo from "./views/CatalogoProductos";
+import Dashboard from "./views/Dashboard";
+import Estadisticas from "./views/Estadisticas";
 import './App.css';
+
 
 const App = () => {
   return (
@@ -32,6 +35,8 @@ const App = () => {
             <Route path="/usuarios" element={<Usuarios/>} />
             <Route path="/empleados" element={<Empleados/>} />
             <Route path="/catalogo" element={<Catalogo/>} />
+            <Route path="/dashboard" element={<Dashboard/>} />
+            <Route path="/estadisticas" element={<Estadisticas/>} />
 
           </Routes>
       </main>
