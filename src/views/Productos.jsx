@@ -7,6 +7,8 @@ import CuadroBusquedas from '../components/busquedas/CuadroBusquedas';
 import { Container, Button, Row, Col } from "react-bootstrap";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 
 const Productos = () => {
   const [listaProductos, setListaProductos] = useState([]);
@@ -301,6 +303,41 @@ pdf. text(`Stock: ${producto. stock}`, anchoPagina / 2, posicionY + 30, { align:
 pdf.save(`${producto.nombre_producto}.pdf` );
 }
 
+const exportarExcelProductos = () => {
+
+  // Estructura de datos para la hoja Excel
+const datos = productosFiltrados.map((producto) => ({
+  ID: producto.id_producto,
+  Nombre: producto.nombre_producto,
+  Descripción: producto.descripcion_producto,
+  "Id Categoría": producto.id_categoria,
+  Precio: parseFloat(producto.precio_unitario),
+  Stock: producto.stock
+
+}));
+
+// Crear hoja y libro Excel
+const hoja = XLSX.utils.json_to_sheet(datos);
+const libro = XLSX.utils.book_new();
+XLSX.utils.book_append_sheet(libro, hoja, "Productos");
+
+// Crear el archivo binario
+const excelBuffer = XLSX.write(libro, { bookType: 'xlsx', type: 'array' });
+
+// Guardar el Excel con un nombre basado en la fecha actual
+const fecha = new Date();
+const dia = String(fecha.getDate()).padStart(2, '0');
+const mes = String(fecha.getMonth() + 1).padStart(2, '0');
+const anio = fecha.getFullYear();
+
+const nombreArchivo = `productos_${dia}${mes}${anio}.xlsx`;
+
+// Guardar archivo con nombre previamente configurado
+const blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+saveAs(blob, nombreArchivo);
+
+}
+
   return (
     <Container className="mt-5">
       <br />
@@ -322,14 +359,26 @@ pdf.save(`${producto.nombre_producto}.pdf` );
         <Col lg={3} md={4} sm={4} xs={5}>
 
         <Button
+           className="mb-3"
+           onClick={generarPDFProductos}
+           variant="secondary"
+           style={{ width: "100%" }}
+         >
+         Generar reporte PDF
+        </Button>
+       </Col>
+
+       <Col lg={3} md={4} sm={4} xs={5}>
+        <Button
         className="mb-3"
-        onClick={generarPDFProductos}
+        onClick={exportarExcelProductos}
         variant="secondary"
         style={{ width: "100%" }}
         >
-        Generar reporte PDF
+        Generar Excel
         </Button>
-       </Col>
+        </Col>
+
         </Row>
 
       <br /><br />
