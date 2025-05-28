@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
 import VentasPorMes from '../components/graficos/VentasPorMes';
 import VentasPorEmpleado from '../components/graficos/VentasPorEmpleado';
+import ChatIA from '../components/chat/ChatIA';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 const Estadisticas = () => {
   // State variables for chart data
   const [meses, setMeses] = useState([]);
@@ -9,6 +10,8 @@ const Estadisticas = () => {
 
   const [empleados, setEmpleados] = useState([]);
   const [totalesPorEmpleado, setTotalesPorEmpleado] = useState([]);
+
+  const [mostrarChatModal, setMostrarChatModal] = useState(false); // Estado para el modal
 
 const cargaVentas = async () => {
       try {
@@ -44,12 +47,22 @@ const cargatotalVentasporempleado = async () => {
   return (
     <Container className="mt-5">
       <h4>Estadísticas</h4>
+
+    <Button 
+      variant="primary" 
+      className="mb-4"
+      onClick={() => setMostrarChatModal(true)}
+    >
+      Consultar con IA
+    </Button>
+
       <Row className="mt-4">
         <Col xs={12} sm={12} md={12} lg={6} className="mb-4">
           <VentasPorMes meses={meses} totales_por_mes={totalesPorMes} />
         </Col>
         <Col xs={12} sm={12} md={12} lg={6} className="mb-4">
           <VentasPorEmpleado empleados={empleados} totales_por_empleado={totalesPorEmpleado} />
+          <ChatIA mostrarChatModal={mostrarChatModal} setMostrarChatModal={setMostrarChatModal} />
         </Col>
       </Row>
     </Container>
